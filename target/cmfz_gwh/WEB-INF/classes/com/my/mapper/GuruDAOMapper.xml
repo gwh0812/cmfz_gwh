@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.my.dao.GuruDao">
+<!--查询-->
+    <select id="queryAll" resultType="com.my.entity.Guru">
+         select id,headPic,name,staus from guru
+    </select>
+<!--删除-->
+<delete id="delete" parameterType="com.my.entity.Guru">
+    delete from guru where id=#{id}
+</delete>
+    <!--添加-->
+    <insert id="insert" parameterType="com.my.entity.Guru">
+        insert into guru value (#{id},#{headPic},#{name},#{staus})
+    </insert>
+
+</mapper>

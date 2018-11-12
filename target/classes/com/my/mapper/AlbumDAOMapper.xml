@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.my.dao.AlbumDao">
+<!--查询-->
+    <resultMap id="showAll" type="com.my.entity.Album">
+        <id property="id" column="fid"></id>
+        <result property="thumbnail" column="fthu"></result>
+        <result property="title" column="ftit"></result>
+        <result property="set_count" column="fset"></result>
+        <result property="create_date" column="fcre"></result>
+        <result property="score" column="fsco"></result>
+        <result property="author" column="faut"></result>
+        <result property="broadcast" column="fbro"></result>
+        <result property="biref" column="fbir"></result>
+
+
+        <collection property="children" ofType="com.my.entity.Chapter">
+            <id property="id" column="zid"/>
+            <result property="title" column="ztit"/>
+            <result property="download_url" column="zdow"></result>
+            <result property="memory" column="zmem"></result>
+            <result property="duration" column="zdur"></result>
+            <result property="album_id" column="zalb"></result>
+        </collection>
+    </resultMap>
+    <!--================================================展示所有=====================================================================-->
+    <select id="queryAll" resultMap="showAll">
+         select fu.id fid,fu.thumbnail  fthu,fu.title ftit,fu.set_count fset,fu.create_date fcre,fu.score fsco,fu.author faut,fu.broadcast fbro,fu.biref fbir,zi.id zid,zi.title ztit,zi.download_url zdow,zi.memory zmem,zi.duration zdur,zi.album_id zalb
+            from chapter zi right join  album fu
+              on fu.id=zi.album_id
+    </select>
+    <!--================================================添加一个=====================================================================-->
+
+    <insert id="insert" parameterType="com.my.entity.Album">
+    insert into album value(#{id},#{thumbnail},#{title},#{set_count},#{create_date},#{score},#{author},#{broadcast},#{biref})
+    </insert>
+    <!--================================================更据id查一个=====================================================================-->
+    <select id="queryOne" resultMap="showAll">
+            select fu.id fid,fu.thumbnail  fthu,fu.title ftit,fu.set_count fset,fu.create_date fcre,fu.score fsco,fu.author faut,fu.broadcast fbro,fu.biref fbir,zi.id zid
+            from chapter zi right join  album fu
+              on fu.id=zi.album_id
+              where fu.id=#{fid}
+    </select>
+
+</mapper>
